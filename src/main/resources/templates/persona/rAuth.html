@@ -1,0 +1,31 @@
+<div class="container">
+<h1>Información de <b th:text=${persona.loginname}/></h1>
+
+	<table class="table table-striped">
+		<tr>
+			<th>
+				Loginname
+			</th>	
+			<th>
+				Nombre
+			</th>	
+			<th>
+				Foto
+			</th>
+		</tr>
+		
+		<tr> 
+			<td th:text="${persona.loginname}"></td>
+			<td th:text="${persona.nombre}"></td>
+			<td>
+				<img th:if="${persona.foto != null}" th:src="|/img/upload/persona-${persona.id}.${persona.foto}|" height="100" width="100" />
+				<img th:if="${persona.foto == null}" src="/img/upload/vacio.png" height="100" width="100" />
+			</td>
+		</tr>
+	</table>
+	<form action="/">
+		<input type="submit" value="Volver"/>
+	</form>
+	
+
+</div>

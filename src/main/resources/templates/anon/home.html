@@ -1,0 +1,36 @@
+<div class="container jumbotron">
+
+	<div th:if="${session.persona == null}">
+		<h1>Bienvenido</h1>
+		<code>Tienes que registrarte como usuario</code>
+	</div>
+	
+	<div th:if="${session.persona != null && session.persona.loginname.equals('admin')}">
+	<h1>Bienvenido Administrador</h1>
+
+	<form action="/pais/r">
+		<input type="submit" value="Paises"/>
+	</form>
+	
+	<form action="/persona/r">
+		<input type="submit" value="Personas"/>
+	</form>
+	
+	<form action="/categoria/r">
+		<input type="submit" value="Categoria"/>
+	</form>
+	
+	<form action="/producto/r">
+		<input type="submit" value="Producto"/>
+	</form>
+	
+	</div>
+	
+	<div th:if="${session.persona != null && !session.persona.loginname.equals('admin')}">
+		<h1>Bienvenido Usuario</h1>
+		<form action="/persona/rAuth">
+		<input type="submit" value="Ficha Personal"/>
+	</div>
+	
+	
+</div>

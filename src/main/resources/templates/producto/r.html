@@ -1,0 +1,47 @@
+<div class="container">
+	<h1>Lista de productos</h1>
+
+	<a href="/producto/c">
+		<button>Crear</button>
+	</a> <a href="/">
+		<button>Cancelar</button>
+	</a>
+	<table class="table table-striped">
+		<tr>
+			<th>Producto</th>
+			<th>Categoria</th>
+			<th>Imagen</th>
+			<th>Precio</th>
+			<th>Stock</th>
+			<th>Acción</th>
+		</tr>
+
+		<tr th:each="p:${productos}">
+
+			<td th:text="${p.nombre}"></td>
+			<td th:text="${p.categoria.nombre}"></td>
+			<td>
+				<img th:if="${p.foto != null}" th:src="|/img/upload/producto-${p.id}.${p.foto}|" height="100" width="100" />
+				<img th:if="${p.foto == null}" src="/img/upload/vacio.png" height="100" width="100" />
+			</td>
+			<td th:text="${p.precio}"></td>
+			<td th:text="${p.stock}"></td>
+
+			<td class="row">
+				<form action="/producto/u" method="get">
+					<input type="hidden" name="id" th:value="${p.id}" />
+					<button onclick="submit()">
+						<img src="/img/lapiz.png" height="20" width="20">
+					</button>
+				</form>
+				<form action="/producto/d" method="post">
+					<input type="hidden" name="id" th:value="${p.id}" />
+					<button onclick="submit()">
+						<img src="/img/basura.png" height="20" width="20">
+					</button>
+				</form>
+			</td>
+		</tr>
+
+	</table>
+</div>

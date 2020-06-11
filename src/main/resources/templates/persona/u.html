@@ -1,0 +1,37 @@
+<div class="container">
+	<h1>Editar Persona</h1>
+
+	<a href="/">
+		<button>Cancelar</button>
+	</a>
+
+	<form method="post" enctype="multipart/form-data" action="/persona/u" class="form">
+	
+		<input type="hidden" name="id" th:value="${persona.id}"/>
+
+		<label for="id-login">Loginname</label>
+		<input id="id-login" type="text" name="loginname" required="required"/>
+		<br/>
+	
+		<label for="idp">Nombre</label>
+		<input id="idp" type="text" name="nombre" required="required"/>
+		<br/>
+				
+		<label for="id-alt">Altura (cm)</label>
+		<input id="id-alt" type="number" name="altura" value=175 min=0 max=400 required="required"/>
+		<br/>
+	
+		<label for="id-fnac">Fecha de Nacimiento</label>
+		<input id="id-fnac" type="date" name="fnac" value="2000-02-29" required="required"/>
+		<br/>
+		
+		<label for="idPais">País de nacimiento</label>
+			<select name="idPais">
+				<option th:each="pais:${paises}" th:text="${pais.nombre}" th:value="${pais.id}"></option>
+			</select><br>
+		<br/><br/>
+	
+		<input type="submit"/>
+	</form>
+
+</div>

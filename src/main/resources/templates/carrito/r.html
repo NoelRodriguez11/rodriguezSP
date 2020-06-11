@@ -1,0 +1,40 @@
+<div class="container">
+
+	<div class="row">
+		<h3>
+			Total: <span th:text="${venta.getTotal()}"></span>
+		</h3>
+	</div>
+
+	<div class="row">
+		<form action="/">
+			<input type="submit" value="Cancelar" />
+		</form>
+
+		<form action="/carrito/c">
+			<input type="submit" value="Añadir" />
+		</form>
+
+		<form action="/carrito/comprar">
+			<input type="submit" value="COMPRAR" />
+		</form>
+	</div>
+
+	<table class="table table-striped">
+		<tr>
+			<th>Producto</th>
+			<th>Cantidad</th>
+			<th>Precio unitario</th>
+			<th>Total</th>
+		</tr>
+
+		<tr th:each="LineaDeVenta:${venta.ldvs}">
+			<td th:text="${LineaDeVenta.producto.nombre}" />
+			<td th:text="${LineaDeVenta.cantidad}" />
+			<td th:text="${LineaDeVenta.producto.precio}" />
+			<td th:text="${LineaDeVenta.getTotal()}"></td>
+		</tr>
+
+	</table>
+
+</div>

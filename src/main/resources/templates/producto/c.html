@@ -1,0 +1,91 @@
+<div class="container">
+	<h1>Nuevo producto</h1>
+
+	<a href="/">
+		<button>Cancelar</button>
+	</a>
+
+	<form method="post" enctype="multipart/form-data" action="/producto/c" class="form">
+
+		<label for="id-nombre">Nombre</label>
+		<input type="text" name="nombre" required id="nombreId" onkeyup="revisarProducto()"/>
+		<div id="warning" style="display:none;"></div><br>
+		<br/>
+		
+			<script>
+			$(window).on("load",(function() {
+			$(function() {
+			$('#id-foto').change(function(e) {addImage(e);});
+			function addImage(e){
+				var file = e.target.files[0],
+				imageType = /image.*/;
+				if (!file.type.match(imageType)) return;
+				var reader = new FileReader();
+				reader.onload = fileOnload;
+				reader.readAsDataURL(file);
+			}
+			function fileOnload(e) {
+			var result = e.target.result;
+			$('#id-out-foto').attr("src", result);
+			}});}));
+		</script>
+		
+		<script>
+		function mostrar(respuestaAJAX) {
+			
+			json = JSON.parse(respuestaAJAX);
+			if (json["coincide"] == 1) { 
+	    		mensaje ="Producto Registrado.";
+	    		document.getElementById("warning").style="display:inline; margin-left:10px;";
+	    		document.getElementById("nombreId").classList.add("bg-warning");
+	    		document.getElementById("warning").innerHTML=mensaje;
+			}
+			else {
+				document.getElementById("warning").innerHTML='';
+				document.getElementById("nombreId").classList.remove('bg-warning');
+			}	
+		}
+		
+		function revisarProducto() {
+			url = "http://localhost:8080/producto/lanzarAJAX";
+				
+			x = new XMLHttpRequest();
+			x.open("POST", url, true);
+			x.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+			
+			x.send("nombreProducto="+document.getElementById('nombreId').value);
+			
+			x.onreadystatechange=function() {
+				if (x.readyState==4 && x.status==200) {
+					mostrar(x.responseText);
+				} 
+
+			//--disable-web-security --disable-gpu --user-data-dir=
+			}
+		}
+		
+		</script>
+		
+		<label for="id-foto">Foto</label>
+		<input id="id-foto" type="file" name="foto"/>
+		<img class="offset-1 col-2" id="id-out-foto" width="3%" height="3%" src="" alt=""/>
+		<br/><br/>
+				
+		<label for="id-precio">Precio</label>
+		<input id="id-precio" type="number" step="0.01" name="precio" required="required"> 
+		<br/>
+
+		<label for="id-stock">Stock Inicial</label>
+		<input id="id-stock" type="number" min="0" value="1" name="stock" required="required"> 
+		<br/>
+		
+		<label for="idCategoria">Categoria del producto</label>
+		<select name="idCategoria">
+			<option value="">---</option>
+			<option th:each="categoria:${categorias}" th:text="${categoria.nombre}" th:value="${categoria.id}"></option>
+		</select>
+		<br/>
+		
+		<input type="submit"/>
+	</form>
+</div>
